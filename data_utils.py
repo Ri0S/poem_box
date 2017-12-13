@@ -1,6 +1,6 @@
 import torch
 import os
-import re
+
 
 class Dictionary(object):
     def __init__(self):
@@ -37,7 +37,6 @@ class Corpus(object):
                 for word in words:
                     self.dictionary.add_word(word)
 
-                    # Tokenize the file content
         ids = torch.LongTensor(tokens)
         token = 0
         with open(path, 'rb') as f:

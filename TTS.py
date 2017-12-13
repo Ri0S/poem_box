@@ -23,7 +23,7 @@ def T2M(sample_path):
     if rescode == 200:
         print("TTS mp3 저장")
         response_body = response.read()
-        with open('sample.mp3', 'wb') as f:
+        with open('./sample/sample.mp3', 'wb') as f:
             f.write(response_body)
         return True
     else:
