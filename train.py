@@ -7,11 +7,11 @@ from data_utils import Corpus
 embed_size = 256
 hidden_size = 256
 num_layers = 1
-num_epochs = 3
+num_epochs = 4
 num_samples = 5000  # number of words to be sampled
 batch_size = 20
-seq_length = 5
-learning_rate = 0.002
+seq_length = 7
+learning_rate = 0.0005
 
 train_path = './data/random_half_less10_up5_newline_replaced.txt'
 sample_path = './train_sample.txt'
@@ -44,7 +44,7 @@ class RNNLM(nn.Module):
 
 model = RNNLM(vocab_size, embed_size, hidden_size, num_layers)
 model.cuda()
-# model.load_state_dict(torch.load('model_full_kernel7_less10_up5_nlbr_epoch0.pkl', map_location=lambda storage, loc: storage))
+model.load_state_dict(torch.load('./model/kernel7_random_half_less10_up5_newline_replaced_12.pkl', map_location=lambda storage, loc: storage))
 
 criterion = nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
@@ -54,7 +54,7 @@ def detach(states):
     return [state.detach() for state in states]
 
 
-for epoch in range(num_epochs):
+for epoch in range(16, 16 + num_epochs):
     states = (Variable(torch.zeros(num_layers, batch_size, hidden_size)).cuda(),
               Variable(torch.zeros(num_layers, batch_size, hidden_size)).cuda())
 
@@ -73,7 +73,7 @@ for epoch in range(num_epochs):
         step = (i + 1) // seq_length
         if step % 100 == 0:
             print('Epoch [%d/%d], Step[%d/%d], Loss: %.3f, Perplexity: %5.2f' %
-                  (epoch + 1, num_epochs, step, num_batches, loss.data[0], np.exp(loss.data[0])))
+                  (epoch, num_epochs, step, num_batches, loss.data[0], np.exp(loss.data[0])))
 
     torch.save(model.state_dict(), './model/kernel%d_random_half_less10_up5_newline_replaced_%d.pkl' % (seq_length, epoch))
 

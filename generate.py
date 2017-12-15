@@ -59,7 +59,10 @@ def gen(seed):
         state = (Variable(torch.zeros(num_layers, 1, hidden_size)).cuda(),
                  Variable(torch.zeros(num_layers, 1, hidden_size)).cuda())
         prob = torch.ones(vocab_size)
-
+        ###
+        # t = corpus.dictionary.word2idx[seed]
+        # input_seq = Variable(torch.LongTensor([t, t, t, t, t]).unsqueeze(0), volatile=True).cuda()
+        ###
         try:
             input_seq = [corpus.dictionary.word2idx[seed]]
             state = (Variable(torch.zeros(num_layers, 1, hidden_size)).cuda(),
@@ -69,10 +72,11 @@ def gen(seed):
                 prob = out[i].squeeze().data.exp().cpu()
                 word_id = torch.multinomial(prob, 1)[0]
                 input_seq.append(word_id)
-            input_seq[0] = corpus.dictionary.word2idx[seed]
             input_seq = Variable(torch.LongTensor(input_seq).unsqueeze(0), volatile=True).cuda()
         except KeyError:
             input_seq = Variable(torch.multinomial(prob, num_samples=seq_length).unsqueeze(0), volatile=True).cuda()
+
+        asdf = 0    ####
 
         while True:
             output, state = model(input_seq, state)
@@ -81,9 +85,10 @@ def gen(seed):
             word = corpus.dictionary.idx2word[word_id]
             print(word, end=' ')
             if '+++$+++' in word:
-                word = '\n'
+                word = '\r\n'
             elif word == '<eos>':
-                break
+                # break
+                word += '\r\n\r\n'  ####
             else:
                 word += ' '
             f.write(word.encode('utf-8'))
@@ -91,7 +96,10 @@ def gen(seed):
             for i in range(seq_length-1):
                 input_seq.data[0][i] = input_seq.data[0][i+1]
             input_seq.data[0][seq_length-1] = word_id
-
+            # input_seq.data[0][0] = corpus.dictionary.word2idx[seed]
+            if asdf > 5000:  ####
+                break       ####
+            asdf += 1       ####
 
 def gen2(seed):
     with open(sample_path, 'wb') as f:
@@ -138,5 +146,5 @@ def gen2(seed):
 
 
 if __name__ == '__main__':
-    setup(5, 'random_half_less10_up5_newline_replaced.txt', 'kernel5_random_half_less10_up5_newline_replaced_0.pkl')
-    gen('전쟁')
+    setup(7, 'random_half_less10_up5_newline_replaced.txt', 'kernel7_random_half_less10_up5_newline_replaced_15.pkl')
+    gen('사랑')
