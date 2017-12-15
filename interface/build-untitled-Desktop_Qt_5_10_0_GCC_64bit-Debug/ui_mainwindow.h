@@ -32,6 +32,7 @@ public:
     QPushButton *pushButton_2;
     QTextEdit *textEdit;
     QTextEdit *textEdit_2;
+    QPushButton *pushButton_3;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -46,7 +47,7 @@ public:
         pushButton = new QPushButton(centralWidget);
         pushButton->setObjectName(QStringLiteral("pushButton"));
         pushButton->setEnabled(false);
-        pushButton->setGeometry(QRect(280, 290, 91, 31));
+        pushButton->setGeometry(QRect(270, 290, 91, 31));
         pushButton_2 = new QPushButton(centralWidget);
         pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
         pushButton_2->setGeometry(QRect(170, 290, 91, 31));
@@ -58,6 +59,10 @@ public:
         textEdit_2 = new QTextEdit(centralWidget);
         textEdit_2->setObjectName(QStringLiteral("textEdit_2"));
         textEdit_2->setGeometry(QRect(10, 290, 151, 31));
+        pushButton_3 = new QPushButton(centralWidget);
+        pushButton_3->setObjectName(QStringLiteral("pushButton_3"));
+        pushButton_3->setEnabled(false);
+        pushButton_3->setGeometry(QRect(370, 290, 91, 31));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -85,6 +90,7 @@ public:
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Enter a seed word</p></body></html>", nullptr));
+        pushButton_3->setText(QApplication::translate("MainWindow", "stop", nullptr));
     } // retranslateUi
 
 };
