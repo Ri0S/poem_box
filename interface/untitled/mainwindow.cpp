@@ -17,10 +17,16 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
-    ui->textEdit->setText(ui->textEdit_2->toPlainText());
+//     show poem and play sound
+    ui->textEdit->setText("");
+
 }
 
 void MainWindow::on_pushButton_2_clicked()
 {
-    ui->textEdit_2->toPlainText();
+    ui->textEdit->setText(ui->textEdit_2->toPlainText());
+//     after recv poem and sound file
+//     start botton activate
+//    send seed to serv
+    ui->pushButton->setEnabled(1);
 }
