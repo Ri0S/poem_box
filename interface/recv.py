@@ -12,7 +12,7 @@ else:
 
 
 s.connect((host, port))
-f = open('sample.mp3', 'wb')
+f = open('/home/rios/poembox/poem_box/interface/sample.mp3', 'wb')
 #s.send(seed.encode('utf-8'))
 s.send(seed)
 
@@ -26,7 +26,7 @@ while True:
         a = a.split('---$---'.encode('utf-8'))
         f.write(a[0])
         f.close()
-        f = open('sample.txt', 'wb')
+        f = open('/home/rios/poembox/poem_box/interface/sample.txt', 'wb')
         f.write(a[1])
     else:
         f.write(a)
